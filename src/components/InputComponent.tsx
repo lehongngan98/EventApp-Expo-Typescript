@@ -37,7 +37,7 @@ const InputComponent = (props: Props) => {
                 onChangeText={val => onChange(val)}
                 secureTextEntry={isPassword && !isShowPass}
                 value={value}
-                style={[globalStyles.text,styles.input]}
+                style={[globalStyles.text,styles.input,{paddingLeft: affix || suffix ? 14 : 0}]}
                 placeholderTextColor={appColors.gray2}
                 keyboardType={type ?? 'default'}
                 autoCapitalize='none'
@@ -83,7 +83,9 @@ const styles = StyleSheet.create({
         marginBottom:19,
     },
     input: {
-        flex: 1,
-        paddingHorizontal:14,
+        flex: 1,    
+        margin:0,
+        padding:0,
+        color:appColors.text,    
     },
 });
