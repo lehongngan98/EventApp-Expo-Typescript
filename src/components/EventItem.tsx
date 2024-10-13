@@ -24,8 +24,6 @@ const EventItem = (props: Props) => {
 
     const navigation: any = useNavigation();
 
-    console.log(item);
-
     return (
         <CardComponent
             onPress={() => navigation.navigate('EventDetail', { item })}

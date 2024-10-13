@@ -1,14 +1,44 @@
 import { HambergerMenu, Notification, SearchNormal, Sort } from 'iconsax-react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FlatList, ImageBackground, Platform, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { ButtonComponent, CardComponent, CategoriesListComponent, CircleComponent, EventItem, RowComponent, SectionComponent, SpaceComponent, TabBarComponent, TagComponent, TextComponent } from '../../components'
 import { appColors } from '../../constants/appColors'
 import { fontFamilies } from '../../constants/fontFamilies'
 import { globalStyles } from '../../styles/globalStyles'
+import * as Location from 'expo-location';
+import { RevertAddress } from '../../models/RevertAddress';
+
 
 
 const HomeScreen = ({ navigation }: any) => {
+    const [location, setLocation] = useState(null);
+    const [address, setAddress] = useState(null);    
+
+    useEffect(() => {
+        getLocation();                                
+    }, []);
+
+
+
+    const getLocation = async () => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+            console.log('Permission to access location was denied');
+            return;
+        }
+
+        let location = await Location.getCurrentPositionAsync({});
+        setLocation(location);
+        // console.log('location:', location);
+        revertLocation(location.coords.latitude, location.coords.longitude);
+    };
+
+    const revertLocation = async (lat: number, long: number) => {
+        const revertGeocodeAddress = await Location.reverseGeocodeAsync({ latitude: lat, longitude: long });
+        console.log('revertGeocodeAddress:', revertGeocodeAddress);
+        setAddress(revertGeocodeAddress);                        
+    };
 
     const eventItems = {
         title: 'International Band Music Concert',
@@ -48,7 +78,7 @@ const HomeScreen = ({ navigation }: any) => {
                             <TextComponent text='Current Location' color={appColors.white2} size={12} />
                             <MaterialIcons name='arrow-drop-down' size={18} color={appColors.white} />
                         </RowComponent>
-                        <TextComponent text='New York, USA' styles={{ color: appColors.white, fontSize: 13 }} font={fontFamilies.medium} />
+                        <TextComponent text={`${address[0].district}, ${address[0].country}`} styles={{ color: appColors.white, fontSize: 13 }} font={fontFamilies.medium} />
                     </View>
 
                     <CircleComponent styles={{ backgroundColor: '#524CE0' }} size={36}>
@@ -146,24 +176,24 @@ const HomeScreen = ({ navigation }: any) => {
                             >
                                 <SectionComponent styles={{
                                     paddingTop: 10,
-                                    
+
                                 }}>
                                     <TextComponent text='Invite your friends' title
                                         styles={{
                                             fontSize: 20,
-                                            
+
                                         }}
                                     />
                                     <TextComponent
                                         text='Get $20 for ticket'
                                         styles={{
                                             fontSize: 14,
-                                           
+
                                         }}
                                     />
-                                    <ButtonComponent 
+                                    <ButtonComponent
                                         text='Invite Now'
-                                        onPress={() => {}}
+                                        onPress={() => { }}
                                         styles={{
                                             backgroundColor: '#00F8FF',
                                             width: 120,

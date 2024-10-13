@@ -6,7 +6,7 @@ export const appInfo ={
         height: Dimensions.get('window').height,
     },
     
-    BASE_URL : 'http://localhost:3000',
-    // BASE_URL : 'http://52.41.36.82:3000',
+    // BASE_URL : 'http://localhost:3000',
+    BASE_URL : 'http://172.20.89.114:3000',
 
 }
