@@ -74,5 +74,6 @@ export const globalStyles = StyleSheet.create({
         height: 45,
         marginHorizontal:0,
         marginVertical:0,
+        marginBottom:0,
     }
 })

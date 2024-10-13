@@ -8,19 +8,22 @@ import { globalStyles } from '../styles/globalStyles';
 
 interface Props {
     title: string;
-    onPress: () => void;
+    onPress?: () => void;
 };
 
 const TabBarComponent = (props: Props) => {
     const { title, onPress } = props;
 
     return (
-        <RowComponent styles={{paddingHorizontal:16}}>
-            <TextComponent text={title} title flex={1} size={18}/>
-            <RowComponent onPress={onPress}>
-                <TextComponent text='See all' color={appColors.gray2}/>
-                <ArrowRight2 size={12} color={appColors.gray2}/>
-            </RowComponent>
+        <RowComponent styles={{ paddingHorizontal: 16 }}>
+            <TextComponent text={title} title flex={1} size={18} />
+            {
+                onPress &&
+                (<RowComponent onPress={onPress}>
+                    <TextComponent text='See all' color={appColors.gray2} />
+                    <ArrowRight2 size={12} color={appColors.gray2} />
+                </RowComponent>)
+            }
         </RowComponent>
     )
 }
