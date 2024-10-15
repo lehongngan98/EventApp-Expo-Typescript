@@ -44,7 +44,8 @@ const ChoiceLocation = () => {
                     <SpaceComponent width={12} />
                     <TextComponent
                         text= {addressSelected?.address ?? 'Choose location'}
-                        font={fontFamilies.bold}
+                        font={fontFamilies.regular}
+                        color='gray'
                         size={14}
                     />
                 </RowComponent>

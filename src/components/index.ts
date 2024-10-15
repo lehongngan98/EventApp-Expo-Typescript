@@ -16,6 +16,7 @@ import TabBarIcon from './TabBarIcon';
 import ChoiceLocation from './ChoiceLocation';
 import DrawerCustom from './DrawerCustom';
 
+
 export {
     AvatarGroup,
     ButtonComponent,
@@ -34,4 +35,6 @@ export {
     TabBarIcon,
     TextComponent,
     TagComponent,
+
+    
 };
