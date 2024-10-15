@@ -1,9 +1,11 @@
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { ButtonComponent, ChoiceLocation, ContainerComponent, InputComponent, RowComponent, SectionComponent, SpaceComponent, TextComponent } from '../components';
+import { ButtonComponent, ChoiceLocation, ContainerComponent, DropDownPicker, InputComponent, RowComponent, SectionComponent, SpaceComponent, TextComponent } from '../components';
 import { fontFamilies } from '../constants/fontFamilies';
 import { authSelector } from '../redux/reducers/authReducer';
+import axios, { Axios } from 'axios';
+import userApi from '../apis/userApi';
 
 const initValues = {
     title: "",
@@ -22,6 +24,8 @@ const initValues = {
 
 const AddNewScreen = () => {
     const user = useSelector(authSelector);
+    console.log(user);
+    
 
     const [eventData, setEventData] = useState<any>({
         ...initValues,
@@ -32,11 +36,13 @@ const AddNewScreen = () => {
         const item = { ...eventData };
         item[key] = value;
         setEventData(item);
-        console.log(item);
+        // console.log(item);
     };
 
-    const handleAddEvent = async () => {
-        console.log(eventData);
+    const handleAddEvent = async () => {        
+        const res = await userApi.HandleUser('/get-all');
+        console.log(res);
+        
     };
 
 
@@ -57,7 +63,9 @@ const AddNewScreen = () => {
                     allowClear
                     placeholder='Title'
                 />
+
                 <SpaceComponent height={16} />
+
                 <InputComponent
                     value={eventData.description}
                     onChange={(val) => handleChangeValue('description', val)}
@@ -65,7 +73,10 @@ const AddNewScreen = () => {
                     allowClear
                     multiline
                 />
+
                 <SpaceComponent height={16} />
+
+                {/* // Date and Time */}
                 <RowComponent>
                     <TextComponent
                         text="Date"
@@ -135,6 +146,15 @@ const AddNewScreen = () => {
 
                     </SectionComponent>
                 </RowComponent>
+
+                <SpaceComponent height={16} />
+
+                <DropDownPicker
+                    value={[]}
+                    onSelect={(val : string) => console.log(val)}
+                    label='Invited users'
+                    selected={[]}
+                />
 
                 <SpaceComponent height={16} />
 

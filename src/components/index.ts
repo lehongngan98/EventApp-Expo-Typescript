@@ -15,6 +15,7 @@ import AvatarGroup from './AvatarGroup';
 import TabBarIcon from './TabBarIcon';
 import ChoiceLocation from './ChoiceLocation';
 import DrawerCustom from './DrawerCustom';
+import DropDownPicker from './DropDownPicker';
 
 
 export {
@@ -35,6 +36,7 @@ export {
     TabBarIcon,
     TextComponent,
     TagComponent,
-
+    DropDownPicker,
+    
     
 };
