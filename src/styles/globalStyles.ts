@@ -83,7 +83,7 @@ export const globalStyles = StyleSheet.create({
         borderColor: appColors.gray1,
         borderRadius: 12,
         minHeight: 54,
-        maxHeight: 54,
+        // maxHeight: 54,
         width: '100%',
         padding: 15,
         backgroundColor: appColors.white,

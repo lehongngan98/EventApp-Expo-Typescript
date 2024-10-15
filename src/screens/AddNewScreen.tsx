@@ -1,11 +1,11 @@
 import RNDateTimePicker from '@react-native-community/datetimepicker';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import userApi from '../apis/userApi';
 import { ButtonComponent, ChoiceLocation, ContainerComponent, DropDownPicker, InputComponent, RowComponent, SectionComponent, SpaceComponent, TextComponent } from '../components';
 import { fontFamilies } from '../constants/fontFamilies';
+import { SelectModel } from '../models/SelectModel';
 import { authSelector } from '../redux/reducers/authReducer';
-import axios, { Axios } from 'axios';
-import userApi from '../apis/userApi';
 
 const initValues = {
     title: "",
@@ -23,31 +23,54 @@ const initValues = {
 }
 
 const AddNewScreen = () => {
+    const [userSelected, setUserSelected] = useState<SelectModel[]>([]);
     const user = useSelector(authSelector);
-    console.log(user);
-    
-
     const [eventData, setEventData] = useState<any>({
         ...initValues,
         authorId: user.id
     });
 
+    useEffect(() => {
+        handleGetAllUsers();
+    }, []);
+
     const handleChangeValue = (key: string, value: any) => {
         const item = { ...eventData };
         item[key] = value;
-        setEventData(item);
-        // console.log(item);
+        setEventData(item);        
     };
 
+    const handleGetAllUsers = async () => {
+        const api = '/get-all';
+        try {
+            const res = await userApi.HandleUser(api);
+            if(res && res.data){
+                const items: SelectModel[] = [];
+                res.data.forEach((item: any) => {
+                    items.push({
+                        label: item.fullname ? item.fullname : item.email,
+                        value: item.id,
+                    });
+                });
+                setUserSelected(items);
+            }
+           
+        } catch (error) {
+            console.log(error);
+            
+        }
+        
+    }
+
     const handleAddEvent = async () => {        
-        const res = await userApi.HandleUser('/get-all');
-        console.log(res);
+        console.log(eventData);
+        
         
     };
 
 
     return (
-        <ContainerComponent isScroll>
+        <ContainerComponent isScroll >
             <SectionComponent styles={{ alignItems: 'center' }}>
                 <TextComponent
                     text="Add new event"
@@ -150,10 +173,11 @@ const AddNewScreen = () => {
                 <SpaceComponent height={16} />
 
                 <DropDownPicker
-                    value={[]}
-                    onSelect={(val : string) => console.log(val)}
+                    value={userSelected}
+                    onSelect={(val : string | string[]) => handleChangeValue('users', val)}
                     label='Invited users'
                     selected={[]}
+                    multible
                 />
 
                 <SpaceComponent height={16} />
@@ -169,7 +193,7 @@ const AddNewScreen = () => {
                 <ChoiceLocation />
             </SectionComponent>
 
-            <SectionComponent>
+            <SectionComponent styles={{marginTop:25,alignItems:'center'}}>
                 <ButtonComponent
                     text='Add event'
                     onPress={handleAddEvent}
