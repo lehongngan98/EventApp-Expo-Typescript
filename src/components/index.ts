@@ -13,22 +13,25 @@ import EventItem from './EventItem';
 import CardComponent from './CardComponent';
 import AvatarGroup from './AvatarGroup';
 import TabBarIcon from './TabBarIcon';
+import ChoiceLocation from './ChoiceLocation';
+import DrawerCustom from './DrawerCustom';
 
 export {
-    SpaceComponent,
-    TextComponent,
-    ButtonComponent,
-    InputComponent,
-    ContainerComponent,
-    SectionComponent,
-    RowComponent,
-    CircleComponent,
-    TagComponent,
-    CategoriesListComponent,
-    TabBarComponent,
-    EventItem,
-    CardComponent,
     AvatarGroup,
+    ButtonComponent,
+    CardComponent,
+    CategoriesListComponent,
+    ChoiceLocation,
+    CircleComponent,
+    ContainerComponent,
+    DrawerCustom,
+    EventItem,
+    InputComponent,
+    RowComponent,
+    SectionComponent,
+    SpaceComponent,
+    TabBarComponent,
     TabBarIcon,
-    
-}
+    TextComponent,
+    TagComponent,
+};

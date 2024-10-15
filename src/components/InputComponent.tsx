@@ -1,4 +1,4 @@
-import { KeyboardType, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
+import { KeyboardType, StyleProp, StyleSheet, TextInput, TouchableOpacity, View, ViewStyle } from 'react-native';
 import React, { ReactNode, useRef, useState } from 'react';
 import { EyeSlash, Eye } from 'iconsax-react-native';
 import { appColors } from '../constants/appColors';
@@ -15,10 +15,27 @@ interface Props {
     allowClear?: boolean;
     type?: KeyboardType;
     onEnd?: () => void;
+    multiline?: boolean;
+    numberOfLines?: number;
+    styles?: StyleProp<ViewStyle>;
+
 }
 
 const InputComponent = (props: Props) => {
-    const { value, onChange, affix, placeholder, suffix, isPassword, allowClear ,type ,onEnd} = props;
+    const {
+        value,
+        onChange,
+        affix,
+        placeholder,
+        suffix,
+        isPassword,
+        allowClear,
+        type,
+        onEnd,
+        multiline,
+        numberOfLines,
+        styles
+    } = props;
 
     const [isShowPass, setIsShowPass] = useState(false);
 
@@ -30,14 +47,20 @@ const InputComponent = (props: Props) => {
     };
 
     return (
-        <View style={[styles.container,{}]}>
+        <View style={[
+            globalStyles.inputContainer,
+            {},
+            styles
+        ]}>
             {affix ?? null}
             <TextInput
+                numberOfLines={numberOfLines}
+                multiline={multiline}
                 placeholder={placeholder ?? ''}
                 onChangeText={val => onChange(val)}
                 secureTextEntry={isPassword && !isShowPass}
                 value={value}
-                style={[globalStyles.text,styles.input,{paddingLeft: affix || suffix ? 14 : 0}]}
+                style={[globalStyles.text, globalStyles.input, { paddingLeft: affix || suffix ? 14 : 0 }]}
                 placeholderTextColor={appColors.gray2}
                 keyboardType={type ?? 'default'}
                 autoCapitalize='none'
@@ -69,23 +92,5 @@ const InputComponent = (props: Props) => {
 export default InputComponent;
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderColor: appColors.gray1,
-        borderRadius: 12,
-        minHeight:54,
-        
-        width:'100%',
-        padding:15,
-        backgroundColor:appColors.white,
-        marginBottom:19,
-    },
-    input: {
-        flex: 1,    
-        margin:0,
-        padding:0,
-        color:appColors.text,    
-    },
+
 });

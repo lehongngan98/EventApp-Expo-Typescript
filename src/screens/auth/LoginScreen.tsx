@@ -10,6 +10,7 @@ import { Validate } from '../../utils/validate'
 import { useDispatch } from 'react-redux'
 import { addAuth } from '../../redux/reducers/authReducer'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { LoadingModal } from '../../modal'
 
 
 
@@ -24,7 +25,7 @@ const LoginScreen = ({ navigation }: any) => {
 
     const [isDisable, setIsDisable] = useState(true);
 
-
+    const [isLoadding, setIsLoadding] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -49,7 +50,7 @@ const LoginScreen = ({ navigation }: any) => {
             Alert.alert('Error', 'Invalid email address!')
             return;
         }
-
+        setIsLoadding(true);
         try {
             const res = await authentication.HandleAuthentication('/login', { email, password }, 'post');
 
@@ -60,11 +61,11 @@ const LoginScreen = ({ navigation }: any) => {
                 isRemember ? JSON.stringify(res.data) : email,
             );
 
-
+            setIsLoadding(false);
 
         } catch (error) {
             console.log(error);
-
+            setIsLoadding(false);
         }
     }
 
@@ -164,6 +165,7 @@ const LoginScreen = ({ navigation }: any) => {
                     />
                 </RowComponent>
             </SectionComponent>
+            <LoadingModal visible={isLoadding} />
         </ContainerComponent>
     )
 }
